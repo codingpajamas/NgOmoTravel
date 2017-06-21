@@ -4,24 +4,28 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import { Blog } from '../models/blog';
+import { Tag } from '../models/tag';
 
 @Injectable()
 export class BlogService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
   private blogUrl = 'http://devel2.ordermate.online/wp-json/wp/v2/posts';  // URL to web api
+  private tagUrl = 'http://devel2.ordermate.online/wp-json/wp/v2/tags'
   public totalPages;
 
   constructor(private http: Http) { }
 
 
-  getBlogs(page:number): Promise<Blog[]> { 
+  getBlogs(page:number, tagid?:any): Promise<Blog[]> { 
     const params: string = [
       `page=${page}`,
       `_embed`
-    ].join('&'); 
+    ].join('&');
 
-    return this.http.get(`${this.blogUrl}?${params}`)
+    const tagParam:string = tagid ? `&tags=${tagid}` : '';
+
+    return this.http.get(`${this.blogUrl}?${params}${tagParam}`)
                .toPromise()
                .then((response) => {
                  return response.json().map(post => { 
@@ -38,7 +42,9 @@ export class BlogService {
                       author: post._embedded.author[0].name,
                       category: post._embedded['wp:term'][0][0]['name'],
                       content: post.content.rendered,
-                      tags: post._embedded['wp:term'][1].map(tag => tag.name)
+                      tags: post._embedded['wp:term'][1].map(function(tag){
+                        return {id:tag.id, name:tag.name}
+                      })
                    };
                  }) as Blog[];
                })
@@ -62,8 +68,24 @@ export class BlogService {
           author: post._embedded.author[0].name,
           category: post._embedded['wp:term'][0][0]['name'],
           content: post.content.rendered,
-          tags: post._embedded['wp:term'][1].map(tag => tag.name)
+          tags: post._embedded['wp:term'][1].map(function(tag){
+            return {id:tag.id, name:tag.name}
+          })
         } as Blog;
+      })
+      .catch(this.handleError);
+  } 
+ 
+  getTagInfo(id: number): Promise<Tag> { 
+    return this.http.get(`${this.tagUrl}/${id}`)
+      .toPromise()
+      .then((response) => {
+        let tag = response.json();
+
+        return {
+          id: tag.id,
+          name: tag.name
+        } as Tag;
       })
       .catch(this.handleError);
   } 

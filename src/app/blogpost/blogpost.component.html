@@ -9,7 +9,7 @@
 			<img src="{{blog.imageUrl}}" alt="" class="post-featuredimg img-responsive img-rounded">
 			<div class="post-body" [innerHTML]="blog.content"></div>
 			<div class="post-tags" *ngIf="blog.tags.length">
-				Tags : <span class="label label-primary mr3" *ngFor="let tag of blog.tags">{{tag}}</span> 
+				Tags : <a routerLink="/tags/{{tag.id}}" class="label label-primary mr3" *ngFor="let tag of blog.tags">{{tag.name}}</a> 
 			</div>
 		</div>
 	</div>

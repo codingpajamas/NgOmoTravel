@@ -1,0 +1,48 @@
+<div class="container">
+	<div class="row" *ngIf="blogs">
+		<div *ngIf="tagInfo" class="col-md-12 text-center">
+			<h3>
+				<span class="label label-primary">
+					<i class="glyphicon glyphicon-tag"></i> {{tagInfo.name}}
+				</span>
+			</h3> 
+			<h3>&nbsp;</h3>
+		</div>
+
+		<div *ngFor="let blog of blogs; let i = index" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+			<a routerLink="/blog/{{blog.id}}" class="card">
+				<div class="card-header"> 
+					<p>{{blog.category}}</p>
+					<h3>{{blog.title}}</h3>
+				</div>
+				<img src="{{blog.imageUrl}}" alt="" class="img-responsive">
+				<div class="card-footer">
+					<div class="card-author">by <strong>{{blog.author}}</strong></div>
+					<div class="card-meta clearfix">
+						<span>{{blog.date | date}}</span>
+						<span class="pull-right">{{blog.commentCount}} Comments</span>
+					</div>
+				</div>
+			</a>
+		</div>
+
+		<div class="col-md-12 text-center">
+			<p>
+				<a *ngIf="currentPage != 1" 
+					(click)="getPreviousBlogs($event)" 
+					[class.disabled]="isLoading" 
+					class="btn btn-primary"
+				>Newer</a>
+
+				<a *ngIf="currentPage < totalPages" 
+					(click)="getNextBlogs($event)" 
+					[class.disabled]="isLoading" 
+					class="btn btn-primary"
+				>Older</a>
+			</p>
+		</div> 
+	</div>
+	<div class="row" *ngIf="!blogs">
+		<div class="col-md-12 text-center">loading...</div>
+	</div>
+</div>

@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { BloglistComponent } from './bloglist/bloglist.component';
 import { BlogpostComponent } from './blogpost/blogpost.component';
+import { TagpostsComponent } from './tagposts/tagposts.component';
 
 import { BlogService } from './services/blog';
 
@@ -22,7 +23,11 @@ const appRoutes: Routes = [
 	{ 
 		path: 'blog/:id',
 		component: BlogpostComponent
-	}
+	},
+  { 
+    path: 'tags/:id',
+    component: TagpostsComponent
+  }
 ]
 
 @NgModule({
@@ -30,7 +35,8 @@ const appRoutes: Routes = [
     AppComponent,
     HomepageComponent,
     BloglistComponent,
-    BlogpostComponent
+    BlogpostComponent,
+    TagpostsComponent
   ],
   imports: [
     BrowserModule,
