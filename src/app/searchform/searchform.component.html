@@ -1,6 +1,6 @@
 <form class="navbar-form navbar-right" role="search" (submit)="submitSearch(searchInput)">
 	<div class="form-group">
-		<input type="text" #searchInput name="s" class="form-control" placeholder="Search">
+		<input type="text" #searchInput name="s" class="form-control" placeholder="Search" value="{{query}}">
 	</div>
 	<button type="submit" class="btn btn-default">&nbsp;<i class="glyphicon glyphicon-search"></i>&nbsp;</button>
 </form>

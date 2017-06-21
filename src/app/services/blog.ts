@@ -25,7 +25,6 @@ export class BlogService {
   getBlogs(page:number, tagid?:any, authorid?:any, catid?:any, query?:any): Promise<Blog[]> { 
     const params: string = [
       `page=${page}`,
-      `per_page=2`,
       `_embed`
     ].join('&');
 

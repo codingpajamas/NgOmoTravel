@@ -7,13 +7,16 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./searchform.component.css']
 })
 export class SearchformComponent implements OnInit {
+  query:string;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private route: ActivatedRoute) {
+    this.route.queryParams.subscribe(params => { 
+      this.query = params['query'] || '';
+    });
+  }
 
   submitSearch(search: HTMLInputElement): boolean {
-  	console.log(`you are searching: ${search.value}`);
   	this.router.navigateByUrl(`search?query=${search.value}`);
-
   	return false;
   }
 
