@@ -12,6 +12,7 @@ import { AuthorpostsComponent } from './authorposts/authorposts.component';
 import { CategorypostsComponent } from './categoryposts/categoryposts.component';
 import { SearchformComponent } from './searchform/searchform.component';
 import { SearchpostsComponent } from './searchposts/searchposts.component';
+import { CategorylistComponent } from './categorylist/categorylist.component';
 
 import { BlogService } from './services/blog';
 
@@ -37,6 +38,10 @@ const appRoutes: Routes = [
     component: AuthorpostsComponent
   },
   { 
+    path: 'categories',
+    component: CategorylistComponent
+  },
+  { 
     path: 'category/:id',
     component: CategorypostsComponent
   },
@@ -56,7 +61,8 @@ const appRoutes: Routes = [
     AuthorpostsComponent,
     CategorypostsComponent,
     SearchformComponent,
-    SearchpostsComponent
+    SearchpostsComponent,
+    CategorylistComponent
   ],
   imports: [
     BrowserModule,

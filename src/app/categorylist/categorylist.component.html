@@ -1,0 +1,12 @@
+<div class="container">
+	<div class="row"> 
+		<div class="col-md-12">
+			<div class="well" *ngFor="let cat of categories">
+				<a class="show clearfix" routerLink="/category/{{cat.id}}">
+					<span class="pull-right">{{cat.count > 1 ? cat.count+' blogs' : '1 blog'}}</span>
+					{{cat.name}}
+				</a>
+			</div>
+		</div>
+	</div>
+</div>

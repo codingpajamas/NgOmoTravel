@@ -127,6 +127,25 @@ export class BlogService {
       .catch(this.handleError);
   } 
 
+  getCategories(): Promise<Category[]> { 
+    return this.http.get(`${this.categoryUrl}`)
+      .toPromise()
+      .then((response) => {
+        return response.json().map(category => {
+
+         // i could create a new variable for categories count but i'm using totalBlogs instead of totalCats
+         this.totalBlogs = response.headers['_headers'].get('x-wp-total')[0];
+
+         return {
+            id: category.id, 
+            name: category.name,
+            count: category.count
+         };
+       }) as Category[];
+      })
+      .catch(this.handleError);
+  }
+
   getCategoryInfo(id: number): Promise<Category> { 
     return this.http.get(`${this.categoryUrl}/${id}`)
       .toPromise()
