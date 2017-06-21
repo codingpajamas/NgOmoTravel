@@ -18,12 +18,12 @@
 		<div class="col-md-8 col-md-push-2 post-replies">
 			<h2 class="mb20">{{blog.commentCount}} thoughts on "{{blog.title}}"</h2>
 			<ul class="media-list" *ngIf="blog.commentCount">
-				<li class="media" *ngFor="let comment of blog.comments">
+				<li class="media well well-sm" *ngFor="let comment of blog.comments">
 					<div class="media-left">
 						<img class="media-object" src="{{comment.author_avatar_urls[24] ? comment.author_avatar_urls[24] : '/assets/images/1.png'}}" alt="...">
 					</div>
 					<div class="media-body">
-						<div class="well well-sm">
+						<div class="">
 							<h4 class="media-heading">
 								<span class="show">{{comment.author_name}}</span>
 								<small>{{comment.date | date}}</small>
@@ -33,6 +33,24 @@
 					</div>
 				</li>
 			</ul>
+
+			<form action="#" (submit)="submitComment(commentEmail, commentName, commentContent)" class="well">
+				<h2>Leave a Reply</h2>
+				<p class="mb20">Your email address will not be published. Required fields are marked *</p>
+				<p>
+					<input placeholder="Email *" required type="email" name="email" #commentEmail class="form-control input-sm">
+				</p>
+				<p>
+					<input placeholder="Name *" required type="text" name="name" #commentName class="form-control input-sm">
+				</p>
+				<p>
+					<textarea placeholder="Comment *" required name="content" #commentContent rows="3" class="form-control input-sm"></textarea>
+				</p>
+				<div class="alert alert-danger text-center" *ngIf="errorMsg">{{errorMsg}}</div>
+				<p class="text-center">
+					<input type="submit" value="Submit Comment" class="btn btn-primary">
+				</p>
+			</form>
 		</div>
 	</div>
 </div>

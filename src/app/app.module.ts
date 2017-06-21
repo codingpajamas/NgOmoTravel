@@ -15,6 +15,7 @@ import { SearchpostsComponent } from './searchposts/searchposts.component';
 import { CategorylistComponent } from './categorylist/categorylist.component';
 
 import { BlogService } from './services/blog';
+import { CommentService } from './services/comment';
 
 const appRoutes: Routes = [
 	{ 
@@ -70,7 +71,7 @@ const appRoutes: Routes = [
     HttpModule,
     JsonpModule
   ],
-  providers: [BlogService],
+  providers: [BlogService, CommentService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
