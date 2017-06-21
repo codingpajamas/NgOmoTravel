@@ -44,7 +44,6 @@ export class BloglistComponent implements OnInit {
   } 
 
   selectBlog(blog:Blog, index:number): boolean{
-    console.log(index, blog);
     this.router.navigateByUrl(`blog/${blog.id}`);
     return false;
   }

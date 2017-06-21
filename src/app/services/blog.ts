@@ -50,7 +50,7 @@ export class BlogService {
       .toPromise()
       .then((response) => {
         let post = response.json();
-        console.log(post._embedded.replies[0][0])
+        
         return {
           id: post.id, 
           title: post.title.rendered,

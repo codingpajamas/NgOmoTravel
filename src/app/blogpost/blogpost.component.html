@@ -15,31 +15,6 @@
 	</div>
 	<div class="row">
 		<div class="col-md-8 col-md-push-2 post-replies">
-			<div class="row post-nav">
-				<div class="col-sm-6">
-					<a href="blog/url-slug-here" class="card">
-						<div class="card-header"> 
-							<p>Next Post</p>
-							<h3>Banaue Rice Terraces</h3>
-						</div>
-						<img src="/assets/images/1.jpg" alt="" class="img-responsive"> 
-					</a>
-				</div>
-
-				<div class="col-sm-6">
-					<a href="blog/url-slug-here" class="card">
-						<div class="card-header"> 
-							<p>Previous Post</p>
-							<h3>Galapagos Islands</h3>
-						</div>
-						<img src="/assets/images/2.jpg" alt="" class="img-responsive"> 
-					</a>
-				</div>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-md-8 col-md-push-2 post-replies">
 			<h3>{{blog.commentCount}} thoughts on “Banaue Rice Terraces”</h3>
 			<ul class="media-list" *ngIf="blog.commentCount">
 				<li class="media" *ngFor="let comment of blog.comments">
