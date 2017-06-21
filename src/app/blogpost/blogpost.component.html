@@ -1,0 +1,61 @@
+<div class="container" *ngIf="blog">
+	<div class="row">
+		<div class="col-md-8 col-md-push-2 post-page">
+			<h2 class="post-title">{{blog.title}}</h2>
+			<p class="post-meta">
+				<span class="pull-right">{{blog.date | date}}</span>
+				by <a>{{blog.author}}</a> in <a>{{blog.category}}</a>
+			</p>
+			<img src="{{blog.imageUrl}}" alt="" class="post-featuredimg img-responsive img-rounded">
+			<div class="post-body" [innerHTML]="blog.content"></div>
+			<div class="post-tags" *ngIf="blog.tags">
+				Tags : <span class="label label-primary mr3" *ngFor="let tag of blog.tags">{{tag}}</span> 
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-push-2 post-replies">
+			<div class="row post-nav">
+				<div class="col-sm-6">
+					<a href="blog/url-slug-here" class="card">
+						<div class="card-header"> 
+							<p>Next Post</p>
+							<h3>Banaue Rice Terraces</h3>
+						</div>
+						<img src="/assets/images/1.jpg" alt="" class="img-responsive"> 
+					</a>
+				</div>
+
+				<div class="col-sm-6">
+					<a href="blog/url-slug-here" class="card">
+						<div class="card-header"> 
+							<p>Previous Post</p>
+							<h3>Galapagos Islands</h3>
+						</div>
+						<img src="/assets/images/2.jpg" alt="" class="img-responsive"> 
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-8 col-md-push-2 post-replies">
+			<h3>{{blog.commentCount}} thoughts on “Banaue Rice Terraces”</h3>
+			<ul class="media-list" *ngIf="blog.commentCount">
+				<li class="media" *ngFor="let comment of blog.comments">
+					<div class="media-left">
+						<img class="media-object" src="{{comment.author_avatar_urls[24] ? comment.author_avatar_urls[24] : '/assets/images/1.png'}}" alt="...">
+					</div>
+					<div class="media-body">
+						<h4 class="media-heading">
+							<span class="show">{{comment.author_name}}</span>
+							<small>{{comment.date | date}}</small>
+						</h4>
+						<div class="mb20"  [innerHTML]="comment.content.rendered"></div>
+					</div>
+				</li>
+				
+			</ul>
+		</div>
+	</div>
+</div>
