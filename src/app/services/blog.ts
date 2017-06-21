@@ -5,27 +5,30 @@ import 'rxjs/add/operator/toPromise';
 
 import { Blog } from '../models/blog';
 import { Tag } from '../models/tag';
+import { Author } from '../models/author';
 
 @Injectable()
 export class BlogService {
 
   private headers = new Headers({'Content-Type': 'application/json'});
   private blogUrl = 'http://devel2.ordermate.online/wp-json/wp/v2/posts';  // URL to web api
-  private tagUrl = 'http://devel2.ordermate.online/wp-json/wp/v2/tags'
+  private tagUrl = 'http://devel2.ordermate.online/wp-json/wp/v2/tags';
+  private authorUrl = 'http://devel2.ordermate.online/wp-json/wp/v2/users';
   public totalPages;
 
   constructor(private http: Http) { }
 
 
-  getBlogs(page:number, tagid?:any): Promise<Blog[]> { 
+  getBlogs(page:number, tagid?:any, authorid?:any): Promise<Blog[]> { 
     const params: string = [
       `page=${page}`,
       `_embed`
     ].join('&');
 
     const tagParam:string = tagid ? `&tags=${tagid}` : '';
+    const authorParam:string = authorid ? `&author=${authorid}` : '';
 
-    return this.http.get(`${this.blogUrl}?${params}${tagParam}`)
+    return this.http.get(`${this.blogUrl}?${params}${tagParam}${authorParam}`)
                .toPromise()
                .then((response) => {
                  return response.json().map(post => { 
@@ -39,7 +42,9 @@ export class BlogService {
                       commentCount: post._embedded.replies[0].length,
                       comments: post._embedded.replies[0],
                       date: post.date,
-                      author: post._embedded.author[0].name,
+                      author: post._embedded.author.map(function(author){
+                        return {id:author.id, name:author.name, avatar:author.avatar_urls[48]} as Author
+                      }),
                       category: post._embedded['wp:term'][0][0]['name'],
                       content: post.content.rendered,
                       tags: post._embedded['wp:term'][1].map(function(tag){
@@ -50,6 +55,8 @@ export class BlogService {
                })
                .catch(this.handleError);
   }
+
+  // author: {id:post._embedded.author[0].id, name:post._embedded.author[0].name} as Author,
 
   getBlog(id: number): Promise<Blog> { 
     return this.http.get(`${this.blogUrl}/${id}?_embed`)
@@ -65,16 +72,19 @@ export class BlogService {
           commentCount: post._embedded.replies[0].length,
           comments: post._embedded.replies[0],
           date: post.date,
-          author: post._embedded.author[0].name,
+          author: post._embedded.author.map(function(author){
+            return {id:author.id, name:author.name, avatar:author.avatar_urls[48]} as Author
+          }),
           category: post._embedded['wp:term'][0][0]['name'],
           content: post.content.rendered,
           tags: post._embedded['wp:term'][1].map(function(tag){
-            return {id:tag.id, name:tag.name}
+            return {id:tag.id, name:tag.name} as Tag
           })
         } as Blog;
       })
       .catch(this.handleError);
   } 
+ 
  
   getTagInfo(id: number): Promise<Tag> { 
     return this.http.get(`${this.tagUrl}/${id}`)
@@ -86,6 +96,21 @@ export class BlogService {
           id: tag.id,
           name: tag.name
         } as Tag;
+      })
+      .catch(this.handleError);
+  } 
+
+  getAuthorInfo(id: number): Promise<Author> { 
+    return this.http.get(`${this.authorUrl}/${id}`)
+      .toPromise()
+      .then((response) => {
+        let author = response.json();
+
+        return {
+          id: author.id,
+          name: author.name,
+          avatar:author.avatar_urls[48]
+        } as Author;
       })
       .catch(this.handleError);
   } 

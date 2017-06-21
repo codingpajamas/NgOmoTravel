@@ -10,6 +10,7 @@ import { BlogpostComponent } from './blogpost/blogpost.component';
 import { TagpostsComponent } from './tagposts/tagposts.component';
 
 import { BlogService } from './services/blog';
+import { AuthorpostsComponent } from './authorposts/authorposts.component';
 
 const appRoutes: Routes = [
 	{ 
@@ -27,6 +28,10 @@ const appRoutes: Routes = [
   { 
     path: 'tags/:id',
     component: TagpostsComponent
+  },
+  { 
+    path: 'author/:id',
+    component: AuthorpostsComponent
   }
 ]
 
@@ -36,7 +41,8 @@ const appRoutes: Routes = [
     HomepageComponent,
     BloglistComponent,
     BlogpostComponent,
-    TagpostsComponent
+    TagpostsComponent,
+    AuthorpostsComponent
   ],
   imports: [
     BrowserModule,

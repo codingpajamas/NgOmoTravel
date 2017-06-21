@@ -8,7 +8,7 @@
 				</div>
 				<img src="{{blog.imageUrl}}" alt="" class="img-responsive">
 				<div class="card-footer">
-					<div class="card-author">by <strong>{{blog.author}}</strong></div>
+					<div class="card-author">by <strong>{{blog.author[0].name}}</strong></div>
 					<div class="card-meta clearfix">
 						<span>{{blog.date | date}}</span>
 						<span class="pull-right">{{blog.commentCount}} Comments</span>

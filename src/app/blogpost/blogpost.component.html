@@ -4,7 +4,7 @@
 			<h2 class="post-title">{{blog.title}}</h2>
 			<p class="post-meta">
 				<span class="pull-right">{{blog.date | date}}</span>
-				by <a>{{blog.author}}</a> in <a>{{blog.category}}</a>
+				by <a routerLink="/author/{{blog.author[0].id}}">{{blog.author[0].name}}</a> in <a>{{blog.category}}</a>
 			</p>
 			<img src="{{blog.imageUrl}}" alt="" class="post-featuredimg img-responsive img-rounded">
 			<div class="post-body" [innerHTML]="blog.content"></div>

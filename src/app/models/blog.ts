@@ -1,4 +1,5 @@
 import { Tag } from './tag';
+import { Author } from './author';
 
 export class Blog {
   id: number;
@@ -8,7 +9,7 @@ export class Blog {
   commentCount: number;
   comments: any;
   date: string;
-  author: string;
+  author: Author[];
   category: string;
   content: string;
   tags: Tag[];
