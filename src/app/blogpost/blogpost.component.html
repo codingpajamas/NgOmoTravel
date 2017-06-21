@@ -16,18 +16,20 @@
 	</div>
 	<div class="row">
 		<div class="col-md-8 col-md-push-2 post-replies">
-			<h3>{{blog.commentCount}} thoughts on "{{blog.title}}"</h3>
+			<h2 class="mb20">{{blog.commentCount}} thoughts on "{{blog.title}}"</h2>
 			<ul class="media-list" *ngIf="blog.commentCount">
 				<li class="media" *ngFor="let comment of blog.comments">
 					<div class="media-left">
 						<img class="media-object" src="{{comment.author_avatar_urls[24] ? comment.author_avatar_urls[24] : '/assets/images/1.png'}}" alt="...">
 					</div>
 					<div class="media-body">
-						<h4 class="media-heading">
-							<span class="show">{{comment.author_name}}</span>
-							<small>{{comment.date | date}}</small>
-						</h4>
-						<div class="mb20"  [innerHTML]="comment.content.rendered"></div>
+						<div class="well well-sm">
+							<h4 class="media-heading">
+								<span class="show">{{comment.author_name}}</span>
+								<small>{{comment.date | date}}</small>
+							</h4>
+							<div [innerHTML]="comment.content.rendered"></div>
+						</div>
 					</div>
 				</li>
 			</ul>
