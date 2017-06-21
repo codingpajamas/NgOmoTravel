@@ -118,9 +118,15 @@ body {
 }
 
 /* helper classes */
+.inblock {
+	display: inline-block;
+}
 .mr3 {
 	margin-right: 3px;
 }
 .mb20 {
 	margin-bottom: 20px;
+}
+.mb10 {
+	margin-bottom: 10px;
 }

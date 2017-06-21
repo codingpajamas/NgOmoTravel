@@ -4,12 +4,13 @@
 			<h2 class="post-title">{{blog.title}}</h2>
 			<p class="post-meta">
 				<span class="pull-right">{{blog.date | date}}</span>
-				by <a routerLink="/author/{{blog.author[0].id}}">{{blog.author[0].name}}</a> in <a>{{blog.category}}</a>
+				by <a routerLink="/author/{{blog.author[0].id}}">{{blog.author[0].name}}</a> 
+				in <a routerLink="/category/{{blog.categories[0].id}}">{{blog.categories[0].name}}</a>
 			</p>
 			<img src="{{blog.imageUrl}}" alt="" class="post-featuredimg img-responsive img-rounded">
 			<div class="post-body" [innerHTML]="blog.content"></div>
 			<div class="post-tags" *ngIf="blog.tags.length">
-				Tags : <a routerLink="/tags/{{tag.id}}" class="label label-primary mr3" *ngFor="let tag of blog.tags">{{tag.name}}</a> 
+				Tags : <a routerLink="/tag/{{tag.id}}" class="label label-primary mr3" *ngFor="let tag of blog.tags">{{tag.name}}</a> 
 			</div>
 		</div>
 	</div>

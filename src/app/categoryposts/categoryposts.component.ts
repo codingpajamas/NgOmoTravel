@@ -2,21 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BlogService } from '../services/blog';
 import { Blog } from '../models/blog';
-import { Author } from '../models/author';
+import { Category } from '../models/category';
 
 @Component({
-  selector: 'app-authorposts',
-  templateUrl: './authorposts.component.html',
-  styleUrls: ['./authorposts.component.css']
+  selector: 'app-categoryposts',
+  templateUrl: './categoryposts.component.html',
+  styleUrls: ['./categoryposts.component.css']
 })
-export class AuthorpostsComponent implements OnInit {
+export class CategorypostsComponent implements OnInit {
   blogs: Blog[];
   currentPage:number;
   totalPages:number;
-  totalBlogs:number;
   isLoading:boolean;
-  authorId:number;
-  authorInfo:Author;
+  catId:number;
+  catInfo:Category;
 
   constructor(private blogService: BlogService, private router: Router, private route: ActivatedRoute) {
   	this.totalPages = 1;
@@ -27,17 +26,16 @@ export class AuthorpostsComponent implements OnInit {
     }); 
 
     this.route.params.subscribe(params => {
-      this.authorId = params['id'] || 1;
+      this.catId = params['id'] || 1;
     });
   }
 
-  getBlogs(tagId?:any, authorId?:any): void {
+  getBlogs(tagId?:any, authorId?:any, catId?:any): void {
   	this.blogService
-  		.getBlogs(this.currentPage, tagId, authorId)
+  		.getBlogs(this.currentPage, tagId, authorId, catId)
   		.then(blogs => {
   			this.blogs = blogs;
   			this.totalPages = this.blogService.totalPages;
-        this.totalBlogs = this.blogService.totalBlogs;
         this.isLoading = false;
   		});
   } 
@@ -45,30 +43,30 @@ export class AuthorpostsComponent implements OnInit {
   getNextBlogs(): boolean {
     this.isLoading = true;
     this.currentPage = Number(this.currentPage) + 1;
-    this.getBlogs(null, this.authorId);
-    this.router.navigateByUrl(`author/${this.authorId}?page=${this.currentPage}`);
+    this.getBlogs(null, null, this.catId);
+    this.router.navigateByUrl(`category/${this.catId}?page=${this.currentPage}`);
     return false;
   } 
 
   getPreviousBlogs(): boolean {
     this.isLoading = true;
     this.currentPage = Number(this.currentPage) - 1;
-    this.getBlogs(null, this.authorId);
-    this.router.navigateByUrl(`author/${this.authorId}?page=${this.currentPage}`);
+    this.getBlogs(null, null, this.catId);
+    this.router.navigateByUrl(`category/${this.catId}?page=${this.currentPage}`);
     return false;
   } 
 
-  getAuthorInfo(authorId:number): void {
+  getCatInfo(): void {
   	this.blogService
-  		.getAuthorInfo(this.authorId)
-  		.then(author => {
-  			this.authorInfo = author;
+  		.getCategoryInfo(this.catId)
+  		.then(cat => {
+  			this.catInfo = cat;
   		});
   }
 
   ngOnInit() {
-  	this.getBlogs(null, this.authorId);
-  	this.getAuthorInfo(this.authorId);
+  	this.getBlogs(null, null, this.catId);
+  	this.getCatInfo();
   }
 
 }

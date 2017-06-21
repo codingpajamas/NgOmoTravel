@@ -2,8 +2,9 @@
 	<div class="row" *ngIf="authorInfo"> 
 		<div class="col-md-12 text-center">
 			<h3>
-				<span class="show mb20"><img src="{{authorInfo.avatar}}" alt=""></span>
-				<span class="label label-primary">{{authorInfo.name}}</span>
+				<span class="show mb10"><img src="{{authorInfo.avatar}}" alt=""></span>
+				<span class="label label-primary mb10 inblock">{{authorInfo.name}}</span>
+				<small class="show">There {{totalBlogs > 1 ? 'are '+totalBlogs+' blogs' : 'is 1 blog'}} written by this author</small> 
 			</h3> 
 			<h3>&nbsp;</h3>
 		</div>

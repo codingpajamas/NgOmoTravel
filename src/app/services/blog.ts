@@ -6,6 +6,7 @@ import 'rxjs/add/operator/toPromise';
 import { Blog } from '../models/blog';
 import { Tag } from '../models/tag';
 import { Author } from '../models/author';
+import { Category } from '../models/category';
 
 @Injectable()
 export class BlogService {
@@ -14,12 +15,14 @@ export class BlogService {
   private blogUrl = 'http://devel2.ordermate.online/wp-json/wp/v2/posts';  // URL to web api
   private tagUrl = 'http://devel2.ordermate.online/wp-json/wp/v2/tags';
   private authorUrl = 'http://devel2.ordermate.online/wp-json/wp/v2/users';
+  private categoryUrl = 'http://devel2.ordermate.online/wp-json/wp/v2/categories';
   public totalPages;
+  public totalBlogs;
 
   constructor(private http: Http) { }
 
 
-  getBlogs(page:number, tagid?:any, authorid?:any): Promise<Blog[]> { 
+  getBlogs(page:number, tagid?:any, authorid?:any, catid?:any): Promise<Blog[]> { 
     const params: string = [
       `page=${page}`,
       `_embed`
@@ -27,12 +30,14 @@ export class BlogService {
 
     const tagParam:string = tagid ? `&tags=${tagid}` : '';
     const authorParam:string = authorid ? `&author=${authorid}` : '';
+    const categoryParam:string = catid ? `&categories=${catid}` : '';
 
-    return this.http.get(`${this.blogUrl}?${params}${tagParam}${authorParam}`)
+    return this.http.get(`${this.blogUrl}?${params}${tagParam}${authorParam}${categoryParam}`)
                .toPromise()
                .then((response) => {
-                 return response.json().map(post => { 
+                 return response.json().map(post => {
                    this.totalPages = response.headers['_headers'].get('x-wp-totalpages')[0];
+                   this.totalBlogs = response.headers['_headers'].get('x-wp-total')[0];
                    
                    return {
                       id: post.id, 
@@ -45,7 +50,9 @@ export class BlogService {
                       author: post._embedded.author.map(function(author){
                         return {id:author.id, name:author.name, avatar:author.avatar_urls[48]} as Author
                       }),
-                      category: post._embedded['wp:term'][0][0]['name'],
+                      categories: post._embedded['wp:term'][0].map(function(category){
+                        return {id:category.id, name:category.name} as Category
+                      }),
                       content: post.content.rendered,
                       tags: post._embedded['wp:term'][1].map(function(tag){
                         return {id:tag.id, name:tag.name} as Tag
@@ -75,7 +82,9 @@ export class BlogService {
           author: post._embedded.author.map(function(author){
             return {id:author.id, name:author.name, avatar:author.avatar_urls[48]} as Author
           }),
-          category: post._embedded['wp:term'][0][0]['name'],
+          categories: post._embedded['wp:term'][0].map(function(category){
+            return {id:category.id, name:category.name} as Category
+          }),
           content: post.content.rendered,
           tags: post._embedded['wp:term'][1].map(function(tag){
             return {id:tag.id, name:tag.name} as Tag
@@ -94,7 +103,8 @@ export class BlogService {
 
         return {
           id: tag.id,
-          name: tag.name
+          name: tag.name,
+          count: tag.count
         } as Tag;
       })
       .catch(this.handleError);
@@ -114,6 +124,21 @@ export class BlogService {
       })
       .catch(this.handleError);
   } 
+
+  getCategoryInfo(id: number): Promise<Category> { 
+    return this.http.get(`${this.categoryUrl}/${id}`)
+      .toPromise()
+      .then((response) => {
+        let category = response.json();
+
+        return {
+          id: category.id,
+          name: category.name,
+          count: category.count
+        } as Category;
+      })
+      .catch(this.handleError);
+  }
 
   private handleError(error: any): Promise<any> {
     console.error('An error occurred', error); // for demo purposes only
