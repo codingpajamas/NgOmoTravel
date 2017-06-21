@@ -10,6 +10,8 @@ import { BlogpostComponent } from './blogpost/blogpost.component';
 import { TagpostsComponent } from './tagposts/tagposts.component';
 import { AuthorpostsComponent } from './authorposts/authorposts.component';
 import { CategorypostsComponent } from './categoryposts/categoryposts.component';
+import { SearchformComponent } from './searchform/searchform.component';
+import { SearchpostsComponent } from './searchposts/searchposts.component';
 
 import { BlogService } from './services/blog';
 
@@ -37,6 +39,10 @@ const appRoutes: Routes = [
   { 
     path: 'category/:id',
     component: CategorypostsComponent
+  },
+  { 
+    path: 'search',
+    component: SearchpostsComponent
   }
 ]
 
@@ -48,7 +54,9 @@ const appRoutes: Routes = [
     BlogpostComponent,
     TagpostsComponent,
     AuthorpostsComponent,
-    CategorypostsComponent
+    CategorypostsComponent,
+    SearchformComponent,
+    SearchpostsComponent
   ],
   imports: [
     BrowserModule,

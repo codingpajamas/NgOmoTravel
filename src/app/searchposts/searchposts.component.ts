@@ -2,20 +2,18 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { BlogService } from '../services/blog';
 import { Blog } from '../models/blog';
-import { Tag } from '../models/tag';
 
 @Component({
-  selector: 'app-tagposts',
-  templateUrl: './tagposts.component.html',
-  styleUrls: ['./tagposts.component.css']
+  selector: 'app-searchposts',
+  templateUrl: './searchposts.component.html',
+  styleUrls: ['./searchposts.component.css']
 })
-export class TagpostsComponent implements OnInit {
+export class SearchpostsComponent implements OnInit {
   blogs: Blog[];
   currentPage:number;
   totalPages:number;
   isLoading:boolean;
-  tagId:number;
-  tagInfo:Tag;
+  query:string;
 
   constructor(private blogService: BlogService, private router: Router, private route: ActivatedRoute) {
   	this.totalPages = 1;
@@ -23,16 +21,13 @@ export class TagpostsComponent implements OnInit {
 
     this.route.queryParams.subscribe(params => {
       this.currentPage = params['page'] || 1;
-    }); 
-
-    this.route.params.subscribe(params => {
-      this.tagId = params['id'] || 1;
+      this.query = params['query'] || '';
     });
   }
 
-  getBlogs(tagId?:any): void {
+  getBlogs(tagId?:any, authorId?:any, catId?:any, query?:string): void {
   	this.blogService
-  		.getBlogs(this.currentPage, tagId)
+  		.getBlogs(this.currentPage, tagId, authorId, catId, query)
   		.then(blogs => {
   			this.blogs = blogs;
   			this.totalPages = this.blogService.totalPages;
@@ -43,30 +38,21 @@ export class TagpostsComponent implements OnInit {
   getNextBlogs(): boolean {
     this.isLoading = true;
     this.currentPage = Number(this.currentPage) + 1;
-    this.getBlogs(this.tagId);
-    this.router.navigateByUrl(`tag/${this.tagId}?page=${this.currentPage}`);
+    this.getBlogs(null, null, null, this.query);
+    this.router.navigateByUrl(`search?query=${this.query}&page=${this.currentPage}`);
     return false;
   } 
 
   getPreviousBlogs(): boolean {
     this.isLoading = true;
     this.currentPage = Number(this.currentPage) - 1;
-    this.getBlogs(this.tagId);
-    this.router.navigateByUrl(`tag/${this.tagId}?page=${this.currentPage}`);
+    this.getBlogs(null, null, null, this.query);
+    this.router.navigateByUrl(`search?query=${this.query}&page=${this.currentPage}`);
     return false;
-  } 
-
-  getTagInfo(tagId:number): void {
-  	this.blogService
-  		.getTagInfo(this.tagId)
-  		.then(tag => {
-  			this.tagInfo = tag;
-  		});
-  }
+  }  
 
   ngOnInit() {
-  	this.getBlogs(this.tagId);
-  	this.getTagInfo(this.tagId);
+  	this.getBlogs(null, null, null, this.query); 
   }
 
 }

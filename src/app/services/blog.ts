@@ -22,17 +22,20 @@ export class BlogService {
   constructor(private http: Http) { }
 
 
-  getBlogs(page:number, tagid?:any, authorid?:any, catid?:any): Promise<Blog[]> { 
+  getBlogs(page:number, tagid?:any, authorid?:any, catid?:any, query?:any): Promise<Blog[]> { 
     const params: string = [
       `page=${page}`,
+      `per_page=2`,
       `_embed`
     ].join('&');
+
 
     const tagParam:string = tagid ? `&tags=${tagid}` : '';
     const authorParam:string = authorid ? `&author=${authorid}` : '';
     const categoryParam:string = catid ? `&categories=${catid}` : '';
+    const searchParam:string = query ? `&search=${query}` : ''; 
 
-    return this.http.get(`${this.blogUrl}?${params}${tagParam}${authorParam}${categoryParam}`)
+    return this.http.get(`${this.blogUrl}?${params}${tagParam}${authorParam}${categoryParam}${searchParam}`)
                .toPromise()
                .then((response) => {
                  return response.json().map(post => {
