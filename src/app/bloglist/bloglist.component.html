@@ -1,7 +1,7 @@
 <div class="container">
 	<div class="row" *ngIf="blogs">
 		<div *ngFor="let blog of blogs; let i = index" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-			<a href="blog/{{blog.id}}" class="card">
+			<a routerLink="/blog/{{blog.id}}" class="card">
 				<div class="card-header"> 
 					<p>{{blog.category}}</p>
 					<h3>{{blog.title}}</h3>
@@ -19,8 +19,17 @@
 
 		<div class="col-md-12 text-center">
 			<p>
-				<a href="#" *ngIf="currentPage != 1" (click)="getPreviousBlogs()" class="btn btn-primary">Newer</a>
-				<a href="#" *ngIf="currentPage < totalPages" (click)="getNextBlogs()" class="btn btn-primary">Older</a>
+				<a *ngIf="currentPage != 1" 
+					(click)="getPreviousBlogs($event)" 
+					[class.disabled]="isLoading" 
+					class="btn btn-primary"
+				>Newer</a>
+
+				<a *ngIf="currentPage < totalPages" 
+					(click)="getNextBlogs($event)" 
+					[class.disabled]="isLoading" 
+					class="btn btn-primary"
+				>Older</a>
 			</p>
 		</div> 
 	</div>
