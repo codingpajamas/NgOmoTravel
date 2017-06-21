@@ -1,3 +1,5 @@
+import { Tag } from './tag';
+
 export class Blog {
   id: number;
   title: string;
@@ -9,5 +11,5 @@ export class Blog {
   author: string;
   category: string;
   content: string;
-  tags: any;
+  tags: Tag[];
 }

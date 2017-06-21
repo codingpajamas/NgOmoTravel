@@ -43,7 +43,7 @@ export class BlogService {
                       category: post._embedded['wp:term'][0][0]['name'],
                       content: post.content.rendered,
                       tags: post._embedded['wp:term'][1].map(function(tag){
-                        return {id:tag.id, name:tag.name}
+                        return {id:tag.id, name:tag.name} as Tag
                       })
                    };
                  }) as Blog[];
