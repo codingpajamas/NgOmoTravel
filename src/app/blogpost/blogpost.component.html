@@ -15,7 +15,7 @@
 	</div>
 	<div class="row">
 		<div class="col-md-8 col-md-push-2 post-replies">
-			<h3>{{blog.commentCount}} thoughts on “Banaue Rice Terraces”</h3>
+			<h3>{{blog.commentCount}} thoughts on "{{blog.title}}"</h3>
 			<ul class="media-list" *ngIf="blog.commentCount">
 				<li class="media" *ngFor="let comment of blog.comments">
 					<div class="media-left">
@@ -32,5 +32,10 @@
 				
 			</ul>
 		</div>
+	</div>
+</div>
+<div class="container" *ngIf="!blog">
+	<div class="row">
+		<div class="col-md-12 text-center">Loading</div>
 	</div>
 </div>
