@@ -32,6 +32,9 @@ a {
 .card:hover { 
 	color: #fff;
 } 
+.card img {
+	width: 100%;
+}
 
 .card-header {
 	position: absolute;

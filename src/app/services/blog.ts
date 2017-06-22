@@ -50,7 +50,7 @@ export class BlogService {
                       id: post.id, 
                       title: post.title.rendered,
                       url: post.slug,
-                      imageUrl: post._embedded['wp:featuredmedia'].length ? post._embedded['wp:featuredmedia'][0].source_url : '/assets/images/none.jpg',
+                      imageUrl: post._embedded['wp:featuredmedia'].length ? post._embedded['wp:featuredmedia'][0].media_details.sizes.medium.source_url : '/assets/images/none.jpg',
                       commentCount: post._embedded.replies[0].length,
                       comments: post._embedded.replies[0],
                       date: post.date,
