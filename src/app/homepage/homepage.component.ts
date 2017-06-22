@@ -6,8 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./homepage.component.css']
 })
 export class HomepageComponent implements OnInit {
-
-  constructor() { }
+  imageNumber:number;
+  constructor() {
+  	this.imageNumber = Math.floor(Math.random() * 10) + 1;
+  }
 
   ngOnInit() {
   }

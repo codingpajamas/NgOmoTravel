@@ -1,10 +1,11 @@
-<div class="jumbotron">
+<div class="jumbotron" [style.background-image]="'url(/assets/images/' + imageNumber + '.jpg)'">
+	<div class="overlay"></div>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-12 text-center">
-				<h2>Welcome to our blog</h2>
+				<h2>Welcome to OMOTravel</h2>
 				<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Unde, doloremque neque, facilis.</p>
-				<p><a routerLink="blog" class="btn btn-primary btn-lg">Start reading</a></p>
+				<a routerLink="blog" class="btn btn-omo-red btn-lg">Read Our Blog</a>
 			</div>
 		</div>
 	</div>

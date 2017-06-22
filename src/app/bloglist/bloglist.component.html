@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container padT30">
 	<div class="row" *ngIf="blogs">
 		<div *ngFor="let blog of blogs; let i = index" class="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
 			<a routerLink="/blog/{{blog.id}}" class="card">
@@ -24,13 +24,13 @@
 				<a *ngIf="currentPage != 1" 
 					(click)="getPreviousBlogs($event)" 
 					[class.disabled]="isLoading" 
-					class="btn btn-primary"
+					class="btn btn-omo-blue"
 				>Newer</a>
 
 				<a *ngIf="currentPage < totalPages" 
 					(click)="getNextBlogs($event)" 
 					[class.disabled]="isLoading" 
-					class="btn btn-primary"
+					class="btn btn-omo-blue"
 				>Older</a>
 			</p>
 		</div> 
