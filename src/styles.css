@@ -17,6 +17,9 @@ a {
 	border-radius: 0;
 	margin-bottom: 0;
 } 
+.nav.navbar-nav a {
+	cursor: pointer;
+}
 
 .card {
 	position: relative;

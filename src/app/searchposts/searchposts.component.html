@@ -6,7 +6,7 @@
 					<i class="glyphicon glyphicon-search"></i>
 					{{query}}
 				</span>
-				<small class="show">There {{totalPages > 1 ? 'are '+totalPages+' blogs' : 'is 1 blog'}} found with term like "{{query}}"</small>
+				<small class="show">There {{totalBlogs == 1 ? 'is 1 blog' : 'are '+totalBlogs+' blogs'}} found with term like "{{query}}"</small>
 			</h3> 
 			<h3>&nbsp;</h3>
 		</div>

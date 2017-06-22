@@ -12,16 +12,21 @@ export class SearchpostsComponent implements OnInit {
   blogs: Blog[];
   currentPage:number;
   totalPages:number;
+  totalBlogs:number;
   isLoading:boolean;
   query:string;
 
   constructor(private blogService: BlogService, private router: Router, private route: ActivatedRoute) {
-  	this.totalPages = 1;
+  	this.totalPages = 0;
+    this.totalBlogs = 0;
     this.isLoading = false;
 
     this.route.queryParams.subscribe(params => {
       this.currentPage = params['page'] || 1;
       this.query = params['query'] || '';
+
+      // do it here to check for query update
+      this.getBlogs(null, null, null, this.query);
     });
   }
 
@@ -31,6 +36,7 @@ export class SearchpostsComponent implements OnInit {
   		.then(blogs => {
   			this.blogs = blogs;
   			this.totalPages = this.blogService.totalPages;
+        this.totalBlogs = this.blogService.totalBlogs;
         this.isLoading = false;
   		});
   } 
@@ -52,7 +58,7 @@ export class SearchpostsComponent implements OnInit {
   }  
 
   ngOnInit() {
-  	this.getBlogs(null, null, null, this.query); 
+  	// this.getBlogs(null, null, null, this.query); 
   }
 
 }

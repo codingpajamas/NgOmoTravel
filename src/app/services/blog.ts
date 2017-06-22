@@ -23,6 +23,11 @@ export class BlogService {
 
 
   getBlogs(page:number, tagid?:any, authorid?:any, catid?:any, query?:any): Promise<Blog[]> { 
+
+    // reset 
+    this.totalBlogs = 0;
+    this.totalPages = 0;
+
     const params: string = [
       `page=${page}`,
       `_embed`
